@@ -1,36 +1,69 @@
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
-const movieModel = require('./movie-model.js');
+const express = require('express')
+const path = require('path')
+const app = express()
 
-const app = express();
-
-// Parse urlencoded bodies
-app.use(bodyParser.json()); 
-
-// Serve static content in directory 'files'
 app.use(express.static(path.join(__dirname, 'files')));
 
-// Configure a 'get' endpoint for all movies..
 app.get('/movies', function (req, res) {
-  /* Task 1.2. Remove the line below and eturn the movies from 
-     the model as an array */
-  res.sendStatus(404)
-})
 
-// Configure a 'get' endpoint for a specific movie
-app.get('/movies/:imdbID', function (req, res) {
-  /* Task 2.1. Remove the line below and add the 
-    functionality here */
-  res.sendStatus(404)
-})
+  const movies = [
+    {
+      "Title": "The Thing",
+      "Released": "1982-06-25",
+      "Runtime": 109,
+      "Genres": ["Horror", "Mystery", "Sci-Fi"],
+      "Directors": ["John Carpenter"],
+      "Writers": ["Bill Lancaster", "John W. Campbell Jr."],
+      "Actors": ["Kurt Russell", "Wilford Brimley", "Keith David"],
+      "Plot": "A research team in Antarctica is hunted by a shape-shifting alien that assumes the appearance of its victims.",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BNGViZWZmM2EtNGYzZi00ZDAyLTk3ODMtNzIyZTBjN2Y1NmM1XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg",
+      "Metascore": 57,
+      "imdbRating": 8.2
+    },
+    {
+      "Title": "Citizenfour",
+      "Released": "2014-11-28",
+      "Runtime": 114,
+      "Genres": ["Documentary", "Biography"],
+      "Directors": ["Laura Poitras"],
+      "Writers": ["N/A"],
+      "Actors": ["Edward Snowden", "Glenn Greenwald", "William Binney"],
+      "Plot": "A documentarian and a reporter travel to Hong Kong for the first of many meetings with Edward Snowden",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BMTc0MTM0MTA5MF5BMl5BanBnXkFtZTgwNzEwODEwMzE@._V1_SX300.jpg",
+      "Metascore": 88,
+      "imdbRating": 8.0
+    },
+    {
+      "Title": "India",
+      "Released": "1993-01-01",
+      "Runtime": 90,
+      "Genres": ["Comedy", "Drama"],
+      "Directors": ["Paul Harather"],
+      "Writers": ["Josef Hader", "Alfred Dorfer", "Paul Harather"],
+      "Actors": ["Josef Hader", "Alfred Dorfer", "Maria Hofstätter"],
+      "Plot": "Heinzi Boesel and Kurt Fellner are two Austrian health inspectors forced to work together, traveling through Austria. Over time a beautiful friendship evolves between the odd couple who couldn't stand each other initially",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BMjEwNTU1NDc0Nl5BMl5BanBnXkFtZTcwMDQwMDkxMQ@@._V1_SX300.jpg",
+      "Metascore": 0,
+      "imdbRating": 7.9
+    },
+    {
+      "Title": "Contact High",
+      "Released": "2009-04-17",
+      "Runtime": 98,
+      "Genres": ["Comedy"],
+      "Directors": ["Michael Glawogger"],
+      "Writers": ["Michael Glawogger, Michael Ostrowski"],
+      "Actors": ["Michael Ostrowski", "Raimund Wallisch", "Alexis Santiago Hernandez"],
+      "Plot": "An episodic comedy that follows the lives of four men living in Vienna.",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BMzc0OTAyMDM1NF5BMl5BanBnXkFtZTcwOTM2Mjc1Mg@@._V1_SX300.jpg",
+      "Metascore": 99,
+      "imdbRating": 9.9
+    }
+  ]
 
-/* Task 3.1 and 3.2.
-   - Add a new PUT endpoint
-   - Check whether the movie sent by the client already exists 
-     and continue as described in the assignment */
+  res.json(movies)
+})
 
 app.listen(3000)
 
 console.log("Server now listening on http://localhost:3000/")
-
