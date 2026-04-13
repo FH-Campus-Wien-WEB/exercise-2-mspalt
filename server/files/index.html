@@ -1,13 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Movies!</title>
-    <link rel="stylesheet" href="index.css" />
-    <script src="index.js"></script>
-  </head>
 
-  <body>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movies!</title>
+  <style>
+    body {
+      font-family: 'Arial';
+      margin: 0;
+      padding: 20px;
+      background-color: lightgray;
+    }
+
+    img {
+      border-radius: 8px;
+      max-width: 200px;
+      height: auto;
+    }
+
+    h1 {
+      font-weight: bold;
+      color: black;
+      margin-top: 0;
+    }
+
+    article {
+      background-color: white;
+      border-radius: 12px;
+      margin: 20px 0;
+      padding: 20px;
+    }
+
+    p {
+      margin: 10px 0;
+      line-height: 1.5;
+    }
+  </style>
+  <script>
+    window.onload = function () {
+      const xhr = new XMLHttpRequest()
+      xhr.onload = function () {
+        const bodyElement = document.querySelector("body")
+        if (xhr.status == 200) {
+          /* Part 2: Build the HTML elements here and append them to the body */
+
+          const movies = JSON.parse(xhr.responseText);
+
+          // Do sitebuild for each movie
+          movies.forEach(movie => {
+            // Create a container for each movie using semantic article element
+            const movieArticle = document.createElement('article');
+
+            // Create movie title using header
+            const titleElement = document.createElement('h1');
+            titleElement.textContent = movie.Title;
+            movieArticle.appendChild(titleElement);
+
+            // Create movie poster using img element
+            const posterElement = document.createElement('img');
+            posterElement.src = movie.Poster;
+            movieArticle.appendChild(posterElement);
+
+            // Create release date element
+            const releasedElement = document.createElement('p');
+            releasedElement.innerHTML = `<strong>Released:</strong> ${movie.Released} `;
+            movieArticle.appendChild(releasedElement);
+
+            // Create runtime element
+            const runtimeElement = document.createElement('p');
+            runtimeElement.innerHTML = `<strong>Runtime:</strong> ${movie.Runtime} min`;
+            movieArticle.appendChild(runtimeElement);
+
+            const genresElement = document.createElement('p');
+            genresElement.innerHTML = `<strong>Genres:</strong> ${movie.Genres.join(', ')}`;
+            movieArticle.appendChild(genresElement);
+
+            const directorsElement = document.createElement('p');
+            directorsElement.innerHTML = `<strong>Directors:</strong> ${movie.Directors.join(', ')}`;
+            movieArticle.appendChild(directorsElement);
+            const writersElement = document.createElement('p');
+            writersElement.innerHTML = `<strong>Writers:</strong> ${movie.Writers.join(', ')}`;
+            movieArticle.appendChild(writersElement);
+
+            const actorsElement = document.createElement('p');
+            actorsElement.innerHTML = `<strong>Actors:</strong> ${movie.Actors.join(', ')}`;
+            movieArticle.appendChild(actorsElement);
+
+            const plotElement = document.createElement('p');
+            plotElement.innerHTML = `<strong>Plot:</strong> ${movie.Plot}`;
+            movieArticle.appendChild(plotElement);
+
+            const metascoreElement = document.createElement('p');
+            metascoreElement.innerHTML = `<strong>Metascore:</strong> ${movie.Metascore}`;
+            movieArticle.appendChild(metascoreElement);
+
+            const imdbRatingElement = document.createElement('p');
+            imdbRatingElement.innerHTML = `<strong>IMDB Rating:</strong> ${movie.imdbRating}/10`;
+            movieArticle.appendChild(imdbRatingElement);
+
+            // Append the movie article to the body
+            bodyElement.appendChild(movieArticle);
+
+            // Add a horizontal line for separation; not needed with css
+            //const hr = document.createElement('hr');
+            //bodyElement.appendChild(hr);
+          });
+        } else {
+          bodyElement.append("Daten konnten nicht geladen werden, Status " + xhr.status + " - " + xhr.statusText)
+        }
+      }
+      xhr.open("GET", "/movies")
+      xhr.send()
+    }
+  </script>
+</head>
+
+<body>
+</body>
+
 </html>
